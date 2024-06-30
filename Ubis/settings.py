@@ -5,7 +5,8 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', 'C:\\OSGeo4W\\bin\\gdal309.dll')
+GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH', 'C:\\OSGeo4W\\bin\\geos_c.dll')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'Ubishop',
 ]
 
@@ -53,6 +55,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Ubis.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -87,6 +95,8 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+AUTH_USER_MODEL = 'Ubishop.Usuario'
 
 
 # Password validation

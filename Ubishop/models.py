@@ -1,4 +1,8 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+from django.utils.translation import gettext_lazy as _
+
 
 class Rol(models.Model):
     nombre_rol = models.CharField(max_length=50)
@@ -10,17 +14,15 @@ class Rol(models.Model):
     def __str__(self):
         return self.nombre_rol
 
-class Usuario(models.Model):
-    nombre_usuario = models.CharField(max_length=50)
-    clave = models.CharField(max_length=255)
-    email = models.EmailField(max_length=100)
-    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+class Usuario(AbstractUser):
+    email = models.EmailField(unique=True)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
-        db_table = 'usuarios'  # Nombre de la tabla en la base de datos
+        db_table = 'usuarios'
 
     def __str__(self):
-        return self.nombre_usuario
+        return self.username
 
 class Perfil(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
