@@ -99,10 +99,9 @@ def tiendas(request):
         for tienda in tiendas:
             try:
                 propietario = tienda.propietario.perfil.nombre_usuario
-            except Perfil.DoesNotExist:
-                propietario = 'Sin perfil'
 
             data.append({
+                'id': tienda.id,
                 'nombre': tienda.nombre,
                 'descripcion': tienda.descripcion,
                 'propietario': propietario,
@@ -139,6 +138,7 @@ def insert_product(request):
         tienda = Tienda.objects.get(pk=id)
 
         nuevo_producto = Productos(
+            tienda=tienda,
             nombre_producto=nombre_producto,
             descripcion=descripcion,
             precio=precio,

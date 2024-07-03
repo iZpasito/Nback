@@ -9,9 +9,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'password', 'email', 'rol']
 
     def create(self, validated_data):
-        user = Usuario.objects.create_user(**validated_data)
+        user = Usuario.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
         return user
-    
 class UbicacionSerializer(serializers.ModelSerializer):
     tienda = serializers.CharField(source='tienda.nombre')
     class Meta:
