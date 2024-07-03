@@ -13,7 +13,6 @@ from django.contrib.auth.models import User
 
 
 @api_view(['POST'])
-
 def login(request):
     try:
         user = Usuario.objects.get(email=request.data['email'])
@@ -37,6 +36,7 @@ def register(request):
         return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def buscar_productos(request):
     query = request.GET.get('q', '')
