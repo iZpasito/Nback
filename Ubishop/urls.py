@@ -9,4 +9,6 @@ urlpatterns = [
     path('buscar/', views.buscar_productos, name='buscar_productos'),
     path('api/login/', views.login, name='login'),
     path('api/register/', views.register, name='register'),
+    path('api/insert_productos/', views.insert_product, name='insert_productos'),
+    path('api/delete_productos/', views.delete , name='delete_productos'),
 ]
