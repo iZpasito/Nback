@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework.authtoken import views
 from .views import login, register, insert_product, delete, buscar_productos, ubicaciones, productos_por_tienda, productos, tiendas
 
 urlpatterns = [

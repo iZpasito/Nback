@@ -93,24 +93,17 @@ def productos(request):
 
 @api_view(['GET'])
 def tiendas(request):
-    try:
-        tiendas = Tienda.objects.all()
-        data = []
-        for tienda in tiendas:
-            try:
-                propietario = tienda.propietario.username.nombre_usuario
-            except Usuario.DoesNotExist:
-                propietario = 'Sin perfil'
-
-            data.append({
-                'nombre': tienda.nombre,
-                'descripcion': tienda.descripcion,
-                'propietario': propietario,
-                'propietario_id': tienda.propietario.id
-            })
-        return JsonResponse(data, safe=False)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+    tiendas = Tienda.objects.all()
+    data = [
+        {
+            'nombre': tienda.nombre,
+            'descripcion': tienda.descripcion,
+            'propietario': tienda.propietario.nombre_usuario,
+            'propietario_id': tienda.propietario.id
+        }
+        for tienda in tiendas
+    ]
+    return JsonResponse(data, safe=False)
     
 
     

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Ubicacion, Productos, Tienda, Usuario
 from django_filters import rest_framework as filter
+from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +16,16 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+    
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class UbicacionSerializer(serializers.ModelSerializer):
     tienda = serializers.CharField(source='tienda.nombre')
     class Meta:
