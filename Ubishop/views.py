@@ -98,10 +98,11 @@ def tiendas(request):
         data = []
         for tienda in tiendas:
             try:
-                propietario = tienda.propietario.perfil.nombre_usuario
+                propietario = tienda.propietario.username.nombre_usuario
+            except Usuario.DoesNotExist:
+                propietario = 'Sin perfil'
 
             data.append({
-                'id': tienda.id,
                 'nombre': tienda.nombre,
                 'descripcion': tienda.descripcion,
                 'propietario': propietario,
