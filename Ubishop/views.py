@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 
 
 @api_view(['POST'])
+
 def login(request):
     try:
         user = Usuario.objects.get(email=request.data['email'])
@@ -103,44 +104,3 @@ def tiendas(request):
         for tienda in tiendas
     ]
     return JsonResponse(data, safe=False)
-    
-
-    
-@api_view(['DELETE'])
-def delete(self, request, id):
-    try:
-        producto_borrar = productos.objects.get(pk=id) 
-        producto_borrar.delete() 
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    except productos.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-@api_view(['POST'])
-def insert_product(request):
-    try:
-        id = request.data.get('id_tienda')
-        nombre_producto = request.data.get('nombre_producto')
-        descripcion = request.data.get('descripcion', '')
-        precio = request.data.get('precio')
-        stock = request.data.get('stock')
-
-        if not id or not nombre_producto or not precio or not stock:
-            return Response({'error': 'Faltan datos obligatorios'}, status=status.HTTP_400_BAD_REQUEST)
-
-        tienda = Tienda.objects.get(pk=id)
-
-        nuevo_producto = Productos(
-            tienda=tienda,
-            nombre_producto=nombre_producto,
-            descripcion=descripcion,
-            precio=precio,
-            stock=stock
-        )
-
-        nuevo_producto.save()
-        return Response({'message': 'Producto insertado correctamente'}, status=status.HTTP_201_CREATED)
-    except Tienda.DoesNotExist:
-        return Response({'error': 'La tienda no existe'}, status=status.HTTP_404_NOT_FOUND)
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
