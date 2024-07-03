@@ -13,7 +13,6 @@ from django.contrib.auth.models import User
 
 
 @api_view(['POST'])
-
 def login(request):
     try:
         user = Usuario.objects.get(email=request.data['email'])
